@@ -19,7 +19,7 @@ class AlienInvasion:
         pygame.display.set_caption("Kelvis Invasion")    
         
         
-        self.ship = Ship(self)#asdasd
+        self.ship = Ship(self)
 
         
 
