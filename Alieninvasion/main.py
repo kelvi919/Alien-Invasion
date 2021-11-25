@@ -22,6 +22,7 @@ class AlienInvasion:
         
         
         self.ship = Ship(self)
+        self.bullets = pygame.sprite.Group()
 
         
     def run_game(self):
@@ -30,7 +31,13 @@ class AlienInvasion:
             self._check_events()
             self.ship.update()
             self.bullets.update()
+            # getting rid of the bullets after the bullet.y is < 0
+            for bullet in self.bullets:
+                if bullet.rect.bottom <= 0:
+                    self.bullets.remove(bullet)
+            
             self._update_screen()
+
 
 
     def _check_events(self):
@@ -41,21 +48,21 @@ class AlienInvasion:
             if event.type == pygame.QUIT:
                 sys.exit()
 
-
             elif event.type == pygame.KEYDOWN:
                 self._check_keydown_events(event)
-
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
                     
                     
-
     def _update_screen(self):
         """update img on the screen and flip to nthe new screen"""
         # redraw the screen
         self.screen.fill(self.settings.bg_color)# set background color
         self.ship.blitme()
         
+        # drawing the bullets
+        for bullet in self.bullets.sprites():
+            bullet.draw_bullet()
 
         # draw the most recent screen
         pygame.display.flip()
@@ -68,7 +75,7 @@ class AlienInvasion:
         elif event.key == pygame.K_a:
             self.ship.moving_left = True
         elif event.key == pygame.K_SPACE:
-            self._fire_bullet
+            self._fire_bullet()
         elif event.key == pygame.K_q:
             sys.exit()
 
@@ -86,8 +93,11 @@ class AlienInvasion:
         """create a new bullet and add it to the bullet_list group"""
         new_bullet = Bullet(self)
         self.bullets.add(new_bullet)
+        print("piuu", self.bullets)
+        
 
 
 if __name__ == '__main__':
     ai = AlienInvasion()
     ai.run_game()
+# works
