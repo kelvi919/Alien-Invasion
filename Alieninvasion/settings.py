@@ -9,7 +9,7 @@ class Settings:
         self.bg_color = (40, 40, 40)
               
         # ship setting
-        self.ship_speed = 0.5
+        self.ship_speed = 0.9
 
         # bullet settings
         self.bullet_speed = 1
