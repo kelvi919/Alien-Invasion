@@ -32,11 +32,13 @@ class AlienInvasion:
             self._check_events()
             self.ship.update()
             self.bullets.update()
+
             # getting rid of the bullets after the bullet.y is < 0
             for bullet in self.bullets:
                 if bullet.rect.bottom <= 0:
                     self.bullets.remove(bullet)
 
+            self._update_aliens()
             self._update_screen()
 
 
@@ -100,23 +102,34 @@ class AlienInvasion:
         # create an alien to find the number aliens in a row.
         # spacing between each aliens is ewual to one alien width.
         alien = Alien(self)
+        alien_width, alien_height = alien.rect.size
         alien_width = alien.rect.width
-        available_space_x = self.settings.screen_width - (alien_width)
+        available_space_x = self.settings.screen_width - (2 * alien_width)
         number_aliens_x = available_space_x // (2 * alien_width)
 
-        # create the first row of aliens.
-        for alien_num in range(number_aliens_x):
-            self._create_alien(alien_num)
+        # determine the number of rows of aliens that fit on the screen.
+        ship_height = self.ship.rect.height
+        availebele_space_y = (self.settings.screen_height - (3 * alien_height) - alien_height)
+        number_rows = availebele_space_y // (2 * alien_height)
+
+        # create the full fleet of aliens.
+        for row_num in range(number_rows):
+            for alien_num in range(number_aliens_x):
+                self._create_alien(alien_num, row_num)
+
+
         
         print(alien_num)
 
 
-    def _create_alien(self, alien_num):
+    def _create_alien(self, alien_num, row_num):
         """create an alien and set it into the row"""
         alien = Alien(self)
+        alien_width, alien_height = alien.rect.size
         alien_width = alien.rect.width
         alien.x = alien_width + 2 * alien_width * alien_num
         alien.rect.x = alien.x
+        alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_num
         self.aliens.add(alien)
         
 
