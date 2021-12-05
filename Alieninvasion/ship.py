@@ -8,26 +8,21 @@ class Ship:
         self.settings = ai_game.settings
         self.screen_rect = ai_game.screen.get_rect()
 
-
         # load the ship image and get its rect.
         self.image_image = pygame.image.load("images\ship.png") #n note:Use the relative path from the image file
         self.image_rotate = pygame.transform.rotate(self.image_image, (180))
         self.image = pygame.transform.scale(self.image_rotate, (50, 50))
         self.rect = self.image.get_rect()
-        
 
         # start euch ship at the midbottom of the screen
         self.rect.midbottom = self.screen_rect.midbottom
 
-
         # store a float value for the ships horizontal position
         self.x = float(self.rect.x)
-
 
         # movement flag
         self.moving_right = False
         self.moving_left = False
-    
 
 
     def update(self):
@@ -40,7 +35,6 @@ class Ship:
 
         # update rect value from self.x
         self.rect.x = self.x
-
 
 
     def blitme(self):

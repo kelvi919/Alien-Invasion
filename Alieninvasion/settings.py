@@ -18,6 +18,9 @@ class Settings:
         self.bullet_color = (255, 0, 0)
 
         # alien settings
-        self.alien_speedp = 1.0
+        self.alien_speed = 0.5
         self.alien_widht = 70
         self.alien_height = 70
+        self.fleet_drop_speed = 0
+        # self.fleet_direction 1 == -right-> and 1- == <-left-
+        self.fleet_direction = 1

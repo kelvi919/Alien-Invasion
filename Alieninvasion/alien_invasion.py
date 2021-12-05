@@ -97,6 +97,17 @@ class AlienInvasion:
         print("piuu", self.bullets)
 
 
+    def _create_alien(self, alien_num, row_num):
+        """create an alien and set it into the row"""
+        alien = Alien(self)
+        alien_width, alien_height = alien.rect.size
+        alien_width = alien.rect.width
+        alien.x = alien_width + 2 * alien_width * alien_num
+        alien.rect.x = alien.x
+        alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_num
+        self.aliens.add(alien)
+
+
     def _create_fleet(self):
         """create the fleet of aliens"""
         # create an alien to find the number aliens in a row.
@@ -116,25 +127,33 @@ class AlienInvasion:
         for row_num in range(number_rows):
             for alien_num in range(number_aliens_x):
                 self._create_alien(alien_num, row_num)
-
-
-        
         print(alien_num)
 
 
-    def _create_alien(self, alien_num, row_num):
-        """create an alien and set it into the row"""
-        alien = Alien(self)
-        alien_width, alien_height = alien.rect.size
-        alien_width = alien.rect.width
-        alien.x = alien_width + 2 * alien_width * alien_num
-        alien.rect.x = alien.x
-        alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_num
-        self.aliens.add(alien)
+    def _update_aliens(self):
+        """
+        check if the fleet is at an edge,
+        update the aliens position
+        """
+        self._check_fleet_edges()
+        self.aliens.update()
+    
+
+    def _check_fleet_edges(self):
+        """respond appropriarely if ant aliens have reached the edge."""
+        for alien in self.aliens.sprites():
+            if alien.check_edges():
+                self._change_fleet_direction()
+                break
         
+
+    def _change_fleet_direction(self):
+        """drop the entire fleet and change the fleet's direction."""
+        for alien in self.aliens.sprites():
+            alien.rect.y += self.settings.fleet_drop_speed
+        self.settings.fleet_direction *= -1
+
 
 if __name__ == "__main__":
     ai = AlienInvasion()
     ai.run_game()
-
-
