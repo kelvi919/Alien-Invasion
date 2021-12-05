@@ -37,7 +37,8 @@ class AlienInvasion:
             for bullet in self.bullets:
                 if bullet.rect.bottom <= 0:
                     self.bullets.remove(bullet)
-
+            
+            self._check_fleet_edges()
             self._update_aliens()
             self._update_screen()
 
@@ -97,6 +98,7 @@ class AlienInvasion:
         print("piuu", self.bullets)
 
 
+    ### ALIEN ###
     def _create_alien(self, alien_num, row_num):
         """create an alien and set it into the row"""
         alien = Alien(self)
@@ -120,7 +122,7 @@ class AlienInvasion:
 
         # determine the number of rows of aliens that fit on the screen.
         ship_height = self.ship.rect.height
-        availebele_space_y = (self.settings.screen_height - (3 * alien_height) - alien_height)
+        availebele_space_y = (self.settings.screen_height - (3 * alien_height) - ship_height)
         number_rows = availebele_space_y // (2 * alien_height)
 
         # create the full fleet of aliens.
@@ -131,10 +133,7 @@ class AlienInvasion:
 
 
     def _update_aliens(self):
-        """
-        check if the fleet is at an edge,
-        update the aliens position
-        """
+        """check if the fleet is at an edge, update the aliens position"""
         self._check_fleet_edges()
         self.aliens.update()
     
@@ -142,17 +141,21 @@ class AlienInvasion:
     def _check_fleet_edges(self):
         """respond appropriarely if ant aliens have reached the edge."""
         for alien in self.aliens.sprites():
-            if alien.check_edges():
+            if alien.check_edges():   
                 self._change_fleet_direction()
                 break
         
+              
 
     def _change_fleet_direction(self):
         """drop the entire fleet and change the fleet's direction."""
         for alien in self.aliens.sprites():
             alien.rect.y += self.settings.fleet_drop_speed
-        self.settings.fleet_direction *= -1
-
+        self.settings.fleet_direction = -1
+        
+        
+        
+    ### ALIEN ###
 
 if __name__ == "__main__":
     ai = AlienInvasion()

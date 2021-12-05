@@ -19,8 +19,7 @@ class Settings:
 
         # alien settings
         self.alien_speed = 0.5
-        self.alien_widht = 70
-        self.alien_height = 70
-        self.fleet_drop_speed = 0
-        # self.fleet_direction 1 == -right-> and 1- == <-left-
-        self.fleet_direction = 1
+        self.alien_width = 60
+        self.alien_height = 60
+        self.fleet_drop_speed = 1   
+        self.fleet_direction = 1 # 1 == -right-> and 1- == <-left-
