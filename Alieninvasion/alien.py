@@ -11,7 +11,7 @@ class Alien(Sprite):
         self.settings = ai_game.settings
         
         # Load the alien image and set its attribute.
-        self.image_image = pygame.image.load("images\\ship.png")
+        self.image_image = pygame.image.load("Alieninvasion\Alieninvasion\images\ship.png")
         self.image = pygame.transform.scale(self.image_image, (self.settings.alien_width, self.settings.alien_height))
         self.rect = self.image.get_rect()
 

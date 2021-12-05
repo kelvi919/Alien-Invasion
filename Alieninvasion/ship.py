@@ -9,7 +9,7 @@ class Ship:
         self.screen_rect = ai_game.screen.get_rect()
 
         # load the ship image and get its rect.
-        self.image_image = pygame.image.load("images\ship.png") #n note:Use the relative path from the image file
+        self.image_image = pygame.image.load("Alieninvasion\Alieninvasion\images\ship.png") #n note:Use the relative path from the image file
         self.image_rotate = pygame.transform.rotate(self.image_image, (180))
         self.image = pygame.transform.scale(self.image_rotate, (50, 50))
         self.rect = self.image.get_rect()
