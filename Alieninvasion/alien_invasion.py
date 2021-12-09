@@ -185,6 +185,15 @@ class AlienInvasion:
                 self.settings.fleet_direction = -1
     
 
+    def _check_aliens_bottom(self):
+        """check if any alien is touthing the bottom"""
+        screen_rect = self.screen.get_rect()
+        for alien in self.aliens.sprites():
+            if alien.rect.bottom == screen_rect.bottom:
+                self.ship_hit
+                break
+
+
     def ship_hit(self):
         """respond to the ship being hit by the aliens"""
         # decrement ships_left.
