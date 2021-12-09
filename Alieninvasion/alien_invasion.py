@@ -4,6 +4,7 @@ from time import sleep
 
 from game_stats import GameStats
 from settings import Settings
+from button import Button
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
@@ -11,7 +12,7 @@ from alien import Alien
 
 class AlienInvasion:
     """overall class to manage game assets and behaviors"""
-    ### MAIN ###
+### MAIN ###
     def __init__(self):
         """initialize the game, and create game resources"""
         pygame.init()
@@ -29,15 +30,22 @@ class AlienInvasion:
 
         self._create_fleet()
 
+        # make the play button
+        self.play_button = Button(self, "Play")
+
+
 
     def run_game(self):
         """main loop for the game"""
         while True:
             self._check_events()
-            self.ship.update()
-            self._update_bullets()
-            self._check_fleet_edges()
-            self._update_aliens()
+
+            if self.stats.game_active:
+                self.ship.update()
+                self._update_bullets()
+                self._check_fleet_edges()
+                self._update_aliens()
+
             self._update_screen()
 
 
@@ -52,14 +60,17 @@ class AlienInvasion:
             bullet.draw_bullet()
         self.aliens.draw(self.screen)
 
+        # draw the play button if the game is inactive
+        if not self.stats.game_active:
+            self.play_button.draw_button()
 
-
+            
         # draw the most recent screen
         pygame.display.flip()
-    ### MAIN ###
+### MAIN ###
 
 
-    ### EVENTS ###
+### EVENTS ###
     def _check_events(self):
         """respond to keypress and mouse movement"""
         # checks for events in the game
@@ -92,10 +103,10 @@ class AlienInvasion:
             self.ship.moving_right = False
         elif event.key == pygame.K_a:
             self.ship.moving_left = False
-    ### EVENTS ###
+### EVENTS ###
 
 
-    ### BULLET ###
+### BULLET ###
     def _fire_bullet(self):
         """create a new bullet and add it to the bullet_list group"""
         if len(self.bullets) < self.settings.bullet_allowed:
@@ -123,11 +134,10 @@ class AlienInvasion:
             # destroy bullets and make new ones
             self.bullets.empty()
             self._create_fleet     
+### BULLET ###
 
-    ### BULLET ###
 
-
-    ### ALIEN ###
+### ALIEN ###
     def _create_alien(self, alien_num, row_num):
         """create an alien and set it into the row"""
         alien = Alien(self)
@@ -189,29 +199,31 @@ class AlienInvasion:
         """check if any alien is touthing the bottom"""
         screen_rect = self.screen.get_rect()
         for alien in self.aliens.sprites():
-            if alien.rect.bottom == screen_rect.bottom:
+            if alien.rect.bottom >= screen_rect.bottom:
                 self.ship_hit
                 break
 
 
     def ship_hit(self):
         """respond to the ship being hit by the aliens"""
-        # decrement ships_left.
-        self. stats.ships_left -= 1 
+        if self.stats.ships_left > 0:
+            # decrement ships_left.
+            self. stats.ships_left -= 1 
+            
+            # get rid of remaining aliens/bullets
+            self.aliens.empty()
+            self.bullets.empty()
 
-        # get rid of remaining aliens/bullets
-        self.aliens.empty()
-        self.bullets.empty()
+            #  create a new fleet and center the ship.
+            self._create_fleet()
+            self.ship.center_ship()
 
-        #  create a new fleet and center the ship.
-        self._create_fleet()
-        self.ship.center_ship()
-
-        # pause
-        sleep(0.5)
-
-
-    ### ALIEN ###
+            # pause
+            sleep(0.5)
+            print(f"{self.stats.ships_left} lives left")
+        else:
+            self.stats.game_active = False
+### ALIEN ###
 
 if __name__ == "__main__":
     ai = AlienInvasion()

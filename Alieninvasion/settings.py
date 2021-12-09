@@ -19,7 +19,7 @@ class Settings:
         self.bullet_allowed = 5
 
         # alien settings
-        self.alien_speed = 0.5
+        self.alien_speed = 5.5
         self.ship_limit = 3
         self.alien_width = 60
         self.alien_height = 60
