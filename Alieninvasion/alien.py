@@ -37,6 +37,7 @@ class Alien(Sprite):
             return True
         if self.rect.left == screen_rect.left:
             self.settings.fleet_direction = 1
+        # may need this print(self.settings.fleet_direction)
 
         
         
