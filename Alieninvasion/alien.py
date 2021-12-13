@@ -39,6 +39,8 @@ class Alien(Sprite):
             self.settings.fleet_direction = 1
         # may need this print(self.settings.fleet_direction)
 
+    
+
         
         
             
