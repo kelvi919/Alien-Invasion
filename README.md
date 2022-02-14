@@ -4,3 +4,5 @@ Published by no strach press as an introduction to Python and the Pygame module.
 
 ### What is this game about?
 The game is based on a space shooter in which you control a ship shooting down aliens. 
+
+project is on ice i'll debug and put it on itch.io someday but not now. 
